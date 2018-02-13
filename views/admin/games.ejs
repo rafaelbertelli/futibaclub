@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Futiba Club - Fullstack Academy - DevPleno</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="/css/mdb.min.css" rel="stylesheet">
+	<!-- Your custom styles (optional) -->
+	<link href="/css/style.css" rel="stylesheet">
+	<link href="/css/futiba-interno.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<!--Navbar-->
+		<nav class="navbar navbar-expand-lg navbar-light green fixed-top scrolling-navbar">
+			<% include ../elements/menu-items %>
+		</nav>
+	</header>
+
+	<section class="content">
+		<div class="container">
+			<div class="row">
+
+				<form class="col" method="POST">
+					<p class="h5 text-center mb-4">Gerenciamento de jogos</p>
+					<div class="md-form">
+						<i class="fa fa-user prefix grey-text"></i>
+						<input type="text" class="form-control" name="team_a" autofocus>
+						<label for="orangeForm-email">Time A</label>
+					</div>
+
+					<div class="md-form">
+						<i class="fa fa-user prefix grey-text"></i>
+						<input type="text" class="form-control" name="team_b">
+						<label for="orangeForm-pass">Time B</label>
+					</div>
+
+					<div class="text-center">
+						<button class="btn btn-deep-orange">Criar jogo</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</section>
+
+	<section class="games">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Jogos</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<% games.forEach( game => { %>
+							<tr>
+								<th scope="row"><%= game.id %></th>
+								<td><%= game.team_a %> Vs. <%= game.team_b %></td>
+								<td>
+									<a href="/admin/games/delete/<%= game.id %>">
+										Excluir
+									</a>
+								</td>
+							</tr>
+							<% }) %>
+							
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<% include ../elements/footer %>
