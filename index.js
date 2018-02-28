@@ -1,15 +1,15 @@
 const express = require('express')
-const app = express()
 const mysql = require('mysql2/promise')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const account = require('./account')
 const admin = require('./admin')
-
+const groups = require('./groups')
+const app = express()
 const port = 3000
 
+app.set('view engine', 'ejs')
 app.use(express.static('public'))
-
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(session({
@@ -18,10 +18,7 @@ app.use(session({
 	saveUninitialized: true
 }))
 
-app.set('view engine', 'ejs')
-
 const init = async () => {
-
 	const connection = await mysql.createConnection({
 		host: '127.0.0.1',
 		user: 'root',
@@ -37,12 +34,14 @@ const init = async () => {
 			res.locals.user = false
 
 		next()
-		
+
 	})
 
 	app.use(account(connection))
 	
 	app.use('/admin', admin(connection))
+
+	app.use('/groups', groups(connection))
 
 	app.get('/*', (req, res) => {
 		res.redirect('/')
